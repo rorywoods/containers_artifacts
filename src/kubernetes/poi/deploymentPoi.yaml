@@ -1,31 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripviewer-api
+  name: poi-api
 spec:
   selector:
     matchLabels:
-      app: tripviewer-api
+      app: poi-api
   template:
     metadata:
       labels:
-        app: tripviewer-api # the label for the pods and the deployments
+        app: poi-api # the label for the pods and the deployments
     spec:
       containers:
-      - name: tripviewer-api
-        image: registryudo2566.azurecr.io/tripinsights/tripviewer:latest # IMPORTANT: update with your own repository
+      - name: poi-api
+        image: registryudo2566.azurecr.io/tripinsights/poi:1.0 # IMPORTANT: update with your own repository
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000 # the application listens to this port
+        - containerPort: 80 # the application listens to this port
         env:
         - name: SQL_USER # the application expects to find connection details in this environment variable
-          value: sqladminuDo2566
-          # valueFrom:
-          #   secretKeyRef:
-          #     name: sqlserversecret # the name of the Kubernetes secret containing the data
-          #     key: MONGOCONNECTION # the key inside the Kubernetes secret containing the data
+          valueFrom:
+            secretKeyRef:
+              name: sqlsecret # the name of the Kubernetes secret containing the data
+              key: SQL_USER # the key inside the Kubernetes secret containing the data
         - name: SQL_PASSWORD
-          value: tC0kx0Sd4
+          valueFrom:
+            secretKeyRef:
+              name: sqlsecret # the name of the Kubernetes secret containing the data
+              key: SQL_PASSWORD # the key inside the Kubernetes secret containing the data
         - name: SQL_SERVER
           value: sqlserverudo2566.database.windows.net
         - name: SQL_DBNAME
@@ -40,8 +42,8 @@ spec:
         # readinessProbe: # is the container ready to receive traffic?
         #   httpGet:
         #     port: 3000
-        #     path: /api/tripviewer/healthcheck
+        #     path: /api/poi/healthcheck
         # livenessProbe: # is the container healthy?
         #   httpGet:
         #     port: 3000
-        #     path: /api/tripviewer/healthcheck
+        #     path: /api/poi/healthcheck

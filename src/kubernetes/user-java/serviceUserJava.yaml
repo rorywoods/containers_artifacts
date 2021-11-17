@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userprofile-api
+  name: user-java-api
 spec:
   selector:
-    app: userprofile-api
+    app: user-java-api
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 3000
-  type: ClusterIP
+    targetPort: 80
+  type: LoadBalancer
