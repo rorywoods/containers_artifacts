@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi-api
+spec:
+  selector:
+    matchLabels:
+      app: poi-api
+  template:
+    metadata:
+      labels:
+        app: poi-api # the label for the pods and the deployments
+    spec:
+      containers:
+      - name: poi-api
+        image: registryudo2566.azurecr.io/poi-api:v1 # IMPORTANT: update with your own repository
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000 # the application listens to this port
+        env:
+          -name: SQL_USER
+           value: sqladmin
+          -name: SQL_PASSWORD
+           value: sqladmin
+          -name: SQL_SERVER
+           value: qlserverudo2566.database.windows.net
+          -name: SQL_DBNAME
+           value: mydrivingDB 
+          resources:
+          requests: # minimum resources required
+            cpu: 1000m
+            memory: 64Mi
+          limits: # maximum resources allocated
+            cpu: 1000m
+            memory: 256Mi
+        livenessProbe: # is the container healthy?
+          httpGet:
+            port: 3000
+            path: /api/poi/healthcheck
