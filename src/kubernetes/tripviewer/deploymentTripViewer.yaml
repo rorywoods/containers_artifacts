@@ -20,9 +20,9 @@ spec:
         - containerPort: 80 # the application listens to this port
         env:
         - name: USERPROFILE_API_ENDPOINT
-          value: http://userprofile-api.tripinsights.svc.cluster.local:80
+          value: http://userprofile-api.api.svc.cluster.local:80
         - name: TRIPS_API_ENDPOINT
-          value: http://trips-api.tripinsights.svc.cluster.local:80
+          value: http://trips-api.api.svc.cluster.local:80
         resources:
           requests: # minimum resources required
             cpu: 500m
