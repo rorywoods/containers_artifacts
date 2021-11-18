@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-ingress-static
-  namepsace: api
+  namespace: api
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -18,3 +18,10 @@ spec:
             name: poi-api
             port:
               number: 80
+      - path: /api/trips(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: trips-api
+            port:
+              number: 80              
