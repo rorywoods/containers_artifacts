@@ -18,7 +18,7 @@ spec:
             name: poi-api
             port:
               number: 80
-      - path: /api/trips(/|$)(.*)
+      - path: /api/trips(.*)
         pathType: Prefix
         backend:
           service:
