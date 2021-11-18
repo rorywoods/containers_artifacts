@@ -12,28 +12,28 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/poi(/|$)(.*)
+      - path: /api/poi(.*)
         pathType: Prefix
         backend:
           service:
             name: poi-api
             port:
               number: 80
-      - path: /api/trips(/|$)(.*)
+      - path: /api/trips(.*)
         pathType: Prefix
         backend:
           service:
             name: trips-api
             port:
               number: 80     
-      - path: /api/user(/|$)(.*)
+      - path: /api/user(.*)
         pathType: Prefix
         backend:
           service:
             name: userprofile-api
             port:
               number: 80           
-      - path: /api/user-java(/|$)(.*)
+      - path: /api/user-java(.*)
         pathType: Prefix
         backend:
           service:
