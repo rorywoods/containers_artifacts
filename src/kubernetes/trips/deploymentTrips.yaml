@@ -19,16 +19,6 @@ spec:
         ports:
         - containerPort: 80 # the application listens to this port
         env:
-        - name: SQL_USER # the application expects to find connection details in this environment variable
-          valueFrom:
-            secretKeyRef:
-              name: sqlsecret # the name of the Kubernetes secret containing the data
-              key: SQL_USER # the key inside the Kubernetes secret containing the data
-        - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: sqlsecret # the name of the Kubernetes secret containing the data
-              key: SQL_PASSWORD # the key inside the Kubernetes secret containing the data
         - name: SQL_SERVER
           value: sqlserverudo2566.database.windows.net
         - name: SQL_DBNAME
@@ -40,11 +30,22 @@ spec:
           limits: # maximum resources allocated
             cpu: 1000m #1000m is one full core
             memory: 256Mi
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets"
+          readOnly: true
+        livenessProbe: # is the container healthy?
+          httpGet:
+            port: 80
+            path: /api/trips/healthcheck          
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname-user-msi"
         # readinessProbe: # is the container ready to receive traffic?
         #   httpGet:
         #     port: 80
         #     path: /api/trips/healthcheck
-        livenessProbe: # is the container healthy?
-          httpGet:
-            port: 80
-            path: /api/trips/healthcheck
