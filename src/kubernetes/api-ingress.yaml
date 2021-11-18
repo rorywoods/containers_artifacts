@@ -11,7 +11,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/poi/healthcheck
+      - path: /api/poi((/|$)(.*))
         pathType: Prefix
         backend:
           service:
