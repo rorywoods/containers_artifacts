@@ -15,7 +15,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: poi-api.api.svc.cluster.local
+            name: poi-api
             port:
               number: 80
       - path: /api/trips(/|$)(.*)
