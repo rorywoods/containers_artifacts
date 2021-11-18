@@ -18,11 +18,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80 # the application listens to this port
-        env:
-        - name: SQL_SERVER
-          value: sqlserverudo2566.database.windows.net
-        - name: SQL_DBNAME
-          value: mydrivingDB
         resources:
           requests: # minimum resources required
             cpu: 250m
