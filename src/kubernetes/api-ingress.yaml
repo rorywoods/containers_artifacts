@@ -30,7 +30,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: user-api
+            name: userprofile-api
             port:
               number: 80           
       - path: /api/user-java(/|$)(.*)
